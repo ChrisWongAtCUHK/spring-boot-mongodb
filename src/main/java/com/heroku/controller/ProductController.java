@@ -1,6 +1,7 @@
 package com.heroku.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.heroku.model.Product;
 import com.heroku.repository.ProductRepository;
+import com.heroku.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -21,6 +23,9 @@ public class ProductController {
 
   @Autowired
   private ProductRepository repository;
+
+  @Autowired
+  private ProductService productService;
 
   // 取得所有產品
   @GetMapping
@@ -44,5 +49,15 @@ public class ProductController {
   @DeleteMapping("/{id}")
   public void delete(@PathVariable String id) {
     repository.deleteById(id);
+  }
+
+  @GetMapping("/getStockValueReport")
+  public List<Map> getStockValueReport() {
+    return productService.getStockValueReport();
+  }
+
+  @GetMapping("/getProductsWithCategory")
+  public List<Map> getProductsWithCategory() {
+    return productService.getProductsWithCategory();
   }
 }

@@ -117,6 +117,68 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "getStockValueReport",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Apple Watch\",\n    \"price\": 1128,\n    \"stock\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/products/getStockValueReport",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "products",
+            "getStockValueReport"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getProductsWithCategory",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Apple Watch\",\n    \"price\": 1128,\n    \"stock\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/products/getProductsWithCategory",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "products",
+            "getProductsWithCategory"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
