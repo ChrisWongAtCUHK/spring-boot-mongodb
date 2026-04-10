@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,8 +57,9 @@ public class ProductController {
     return productService.getStockValueReport();
   }
 
-  @GetMapping("/getProductsWithCategory")
-  public List<Map> getProductsWithCategory() {
-    return productService.getProductsWithCategory();
+  @GetMapping("/with-category")
+  public ResponseEntity<List<Map>> getProductsWithCategory() {
+    List<Map> results = productService.getProductsWithCategoryDetail();
+    return ResponseEntity.ok(results);
   }
 }

@@ -167,14 +167,14 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/api/products/getProductsWithCategory",
+          "raw": "{{base_url}}/api/products/with-category",
           "host": [
             "{{base_url}}"
           ],
           "path": [
             "api",
             "products",
-            "getProductsWithCategory"
+            "with-category"
           ]
         }
       },

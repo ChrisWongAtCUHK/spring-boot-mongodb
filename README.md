@@ -15,3 +15,5 @@ Update iPhone 15
 ```
 db.products.updateOne({ name: "iPhone 15"}, { $set: { catId: "c1"}})
 ```
+
+## 在 REST Controller 加入一個「包含分類資訊」的產品查詢介面

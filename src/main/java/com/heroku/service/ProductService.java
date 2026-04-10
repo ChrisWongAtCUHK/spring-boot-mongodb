@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
+import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,19 @@ public class ProductService {
         lookupOperation,
         // 因為 lookup 完會是陣列 [ {title: "..."} ]，通常我們會用 unwind 把它攤平
         unwind("categoryDetails"));
+
+    return mongoTemplate.aggregate(agg, "products", Map.class).getMappedResults();
+  }
+
+  public List<Map> getProductsWithCategoryDetail() {
+    Aggregation agg = Aggregation.newAggregation(
+        Aggregation.lookup("categories", "catId", "_id", "category"),
+        Aggregation.unwind("category", true),
+        Aggregation.project("name", "price", "catId")
+            // 使用 valueOf 指定欄位，再用 convertTo 指定轉換目標為 "string"
+            .and(ConvertOperators.valueOf("_id").convertTo("string")).as("_id")
+            // 處理分類名稱為空的情況
+            .and(ConditionalOperators.ifNull("category.title").then("未分類")).as("categoryName"));
 
     return mongoTemplate.aggregate(agg, "products", Map.class).getMappedResults();
   }
