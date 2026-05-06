@@ -14,6 +14,11 @@ docker run -p 8080:8080 -e MONGODB_URI chriswongatcuhk/spring-boot-mongodb
 docker push chriswongatcuhk/spring-boot-mongodb
 ```
 
+## Set environment variables
+Workloads->Topology
+  Actions->Edit Service
+    YAML
+      
 ### Logs
 Logs 標籤頁也就不會再消失了
 ```
