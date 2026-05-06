@@ -1,9 +1,9 @@
 package com.mongodb.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,13 +59,13 @@ public class ProductController {
   }
 
   @GetMapping("/getStockValueReport")
-  public List<Map> getStockValueReport() {
+  public List<Document> getStockValueReport() {
     return productService.getStockValueReport();
   }
 
   @GetMapping("/with-category")
-  public ResponseEntity<List<Map>> getProductsWithCategory() {
-    List<Map> results = productService.getProductsWithCategoryDetail();
+  public ResponseEntity<List<Document>> getProductsWithCategory() {
+    List<Document> results = productService.getProductsWithCategoryDetail();
     return ResponseEntity.ok(results);
   }
 }

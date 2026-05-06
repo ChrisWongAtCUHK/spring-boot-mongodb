@@ -1,7 +1,6 @@
 package com.mongodb.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -10,6 +9,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
 import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -20,7 +20,7 @@ public class ProductService {
   @Autowired
   private MongoTemplate mongoTemplate; // 必須注入這個來執行 Aggregation
 
-  public List<Map> getStockValueReport() {
+  public List<Document> getStockValueReport() {
     Aggregation agg = Aggregation.newAggregation(
         // 1. 過濾掉沒有庫存的
         match(Criteria.where("stock").gt(0)),
@@ -30,10 +30,10 @@ public class ProductService {
         // 3. 排序
         sort(Sort.Direction.DESC, "totalValue"));
 
-    return mongoTemplate.aggregate(agg, "products", Map.class).getMappedResults();
+    return mongoTemplate.aggregate(agg, "products", Document.class).getMappedResults();
   }
 
-  public List<Map> getProductsWithCategory() {
+  public List<Document> getProductsWithCategory() {
     // 定義 Lookup 步驟
     LookupOperation lookupOperation = LookupOperation.newLookup()
         .from("categories") // 從哪個集合關聯 (Right Table)
@@ -46,10 +46,10 @@ public class ProductService {
         // 因為 lookup 完會是陣列 [ {title: "..."} ]，通常我們會用 unwind 把它攤平
         unwind("categoryDetails"));
 
-    return mongoTemplate.aggregate(agg, "products", Map.class).getMappedResults();
+    return mongoTemplate.aggregate(agg, "products", Document.class).getMappedResults();
   }
 
-  public List<Map> getProductsWithCategoryDetail() {
+  public List<Document> getProductsWithCategoryDetail() {
     Aggregation agg = Aggregation.newAggregation(
         Aggregation.lookup("categories", "catId", "_id", "category"),
         Aggregation.unwind("category", true),
@@ -59,6 +59,6 @@ public class ProductService {
             // 處理分類名稱為空的情況
             .and(ConditionalOperators.ifNull("category.title").then("未分類")).as("categoryName"));
 
-    return mongoTemplate.aggregate(agg, "products", Map.class).getMappedResults();
+    return mongoTemplate.aggregate(agg, "products", Document.class).getMappedResults();
   }
 }
