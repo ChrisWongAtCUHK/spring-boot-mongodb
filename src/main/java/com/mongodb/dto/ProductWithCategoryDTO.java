@@ -1,4 +1,4 @@
-package com.heroku.dto;
+package com.mongodb.dto;
 
 // ProductWithCategoryDTO.java
 public class ProductWithCategoryDTO {

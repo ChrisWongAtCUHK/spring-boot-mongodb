@@ -1,4 +1,4 @@
-package com.heroku.service;
+package com.mongodb.service;
 
 import java.util.List;
 import java.util.Map;

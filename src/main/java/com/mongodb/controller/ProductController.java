@@ -1,4 +1,4 @@
-package com.heroku.controller;
+package com.mongodb.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heroku.model.Product;
-import com.heroku.repository.ProductRepository;
-import com.heroku.service.ProductService;
+import com.mongodb.model.Product;
+import com.mongodb.repository.ProductRepository;
+import com.mongodb.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -43,13 +43,19 @@ public class ProductController {
   // 新增產品
   @PostMapping
   public Product create(@RequestBody Product product) {
-    return repository.save(product);
+    if (product != null) {
+      return repository.save(product);
+    }
+
+    return null;
   }
 
   // 刪除產品
   @DeleteMapping("/{id}")
   public void delete(@PathVariable String id) {
-    repository.deleteById(id);
+    if (id != null) {
+      repository.deleteById(id);
+    }
   }
 
   @GetMapping("/getStockValueReport")

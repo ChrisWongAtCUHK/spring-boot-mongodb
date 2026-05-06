@@ -1,4 +1,4 @@
-package com.heroku;
+package com.mongodb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,11 +20,11 @@ public class MainApplication {
     public String hello(Map<String, Object> model, String input) {
         // http://localhost:5000/hello?input=testspringboot
         try {
-            if(input == null) {
+            if (input == null) {
                 input = "N/A";
             }
             model.put("message", input);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "index";
