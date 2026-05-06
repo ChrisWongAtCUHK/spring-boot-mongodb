@@ -1,30 +1,24 @@
 # Deploy on Red Hat Developer with MongoDB
 
 ## Docker on Red Hat Developer
-## Build
+### Build
 ```
-docker build -t spring-boot-mongodb .
+docker build --platform linux/amd64 -t chriswongatcuhk/spring-boot-mongodb .
 ```
-## Run with environment variable
+### Run with environment variable
 ```
 docker run -p 8080:8080 -e MONGODB_URI chriswongatcuhk/spring-boot-mongodb
 ```
-## Tag and push to Docker Hub
+### Push to Docker Hub
 ```
-docker tag spring-boot-mongodb chriswongatcuhk/spring-boot-mongodb
-docker push chriswongatcuhk/spring-boot-mongodb
-```
-## The Fix: Multi-Platform Build
-```
-docker build --platform linux/amd64 -t chriswongatcuhk/spring-boot-mongodb .
 docker push chriswongatcuhk/spring-boot-mongodb
 ```
 
-## Logs
+### Logs
 Logs 標籤頁也就不會再消失了
 ```
 oc get ksvc
-oc patch ksvc spring-boot-rabbitmq --type merge -p '{"spec":{"template":{"metadata":{"annotations":{"autoscaling.knative.dev/minScale":"1"}}}}}'
+oc patch ksvc spring-boot-mongodb --type merge -p '{"spec":{"template":{"metadata":{"annotations":{"autoscaling.knative.dev/minScale":"1"}}}}}'
 ```
 
 ## Spring Boot 實作 $lookup
