@@ -26,6 +26,9 @@ oc get ksvc
 oc patch ksvc spring-boot-mongodb --type merge -p '{"spec":{"template":{"metadata":{"annotations":{"autoscaling.knative.dev/minScale":"1"}}}}}'
 ```
 
+### Red Hat Developer url
+https://spring-boot-mongodb-chriswong924-dev.apps.rm3.7wse.p1.openshiftapps.com
+
 ## Spring Boot 實作 $lookup
 Add categories
 ```
