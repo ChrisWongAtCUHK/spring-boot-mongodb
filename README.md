@@ -1,9 +1,30 @@
-# Deploy on Heroku with MongoDB
+# Deploy on Red Hat Developer with MongoDB
+
+## Docker on Red Hat Developer
+## Build
 ```
-heroku create spring-boot-mongodb
-git push heroku main
-heroku config:set MONGODB_URI=${MONGODB_URI}
-heroku open
+docker build -t spring-boot-mongodb .
+```
+## Run with environment variable
+```
+docker run -p 8080:8080 -e MONGODB_URI chriswongatcuhk/spring-boot-mongodb
+```
+## Tag and push to Docker Hub
+```
+docker tag spring-boot-mongodb chriswongatcuhk/spring-boot-mongodb
+docker push chriswongatcuhk/spring-boot-mongodb
+```
+## The Fix: Multi-Platform Build
+```
+docker build --platform linux/amd64 -t chriswongatcuhk/spring-boot-mongodb .
+docker push chriswongatcuhk/spring-boot-mongodb
+```
+
+## Logs
+Logs 標籤頁也就不會再消失了
+```
+oc get ksvc
+oc patch ksvc spring-boot-rabbitmq --type merge -p '{"spec":{"template":{"metadata":{"annotations":{"autoscaling.knative.dev/minScale":"1"}}}}}'
 ```
 
 ## Spring Boot 實作 $lookup
